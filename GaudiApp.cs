@@ -106,20 +106,20 @@ namespace org.stpettersens.nGaudi
         private static void displayUsage(int exitCode) 
         {
             Console.WriteLine("\nnGaudi platform agnostic build tool");
-	        Console.WriteLine("Copyright (c) 2011 Sam Saint-Pettersen");
-	        Console.WriteLine("\nReleased under the MIT/X11 License.");
-	        Console.WriteLine("\nUsage: ngaudi [-s <port>][-l][-i|-v|-n|-m][-q]");
-	        Console.WriteLine("[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]");
-	        Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
-	        Console.WriteLine("-l: Enable logging of certain events.");
-	        Console.WriteLine("-i: Display usage information and quit.");
-	        Console.WriteLine("-v: Display version information and quit.");
-	        Console.WriteLine("-n: Generate native Gaudi build file (build.json).");
+            Console.WriteLine("Copyright (c) 2011 Sam Saint-Pettersen");
+            Console.WriteLine("\nReleased under the MIT/X11 License.");
+            Console.WriteLine("\nUsage: ngaudi [-s <port>][-l][-i|-v|-n|-m][-q]");
+            Console.WriteLine("[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]");
+            Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
+            Console.WriteLine("-l: Enable logging of certain events.");
+            Console.WriteLine("-i: Display usage information and quit.");
+            Console.WriteLine("-v: Display version information and quit.");
+            Console.WriteLine("-n: Generate native Gaudi build file (build.json).");
             Console.WriteLine("-p: Invoke <plug-in> action.");
-	        Console.WriteLine("-q: Mute console output, except for :echo and errors (Quiet mode).");
-	        Console.WriteLine("-f: Use <build file> instead of build.json.");
+            Console.WriteLine("-q: Mute console output, except for :echo and errors (Quiet mode).");
+            Console.WriteLine("-f: Use <build file> instead of build.json.");
             Console.ReadLine();
-	        System.Environment.Exit(exitCode);
+            System.Environment.Exit(exitCode);
         }
     }
 }
