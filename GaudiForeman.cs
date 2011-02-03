@@ -12,19 +12,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO.Ports;
+using Newtonsoft.Json;
 
 namespace org.stpettersens.nGaudi
 {
-    class GaudiMessenger
+    class GaudiForeman
     {
-        public GaudiMessenger(bool logging)
+        GaudiLogger l = new GaudiLogger(true);
+        public GaudiForeman(string buildConf)
         {
+           string buildJson = JsonConvert.SerializeObject(buildConf);
+           l.Dump(String.Format("SERIALIZED\n{0}", buildJson));
+        }
 
-        }
-        public void Start()
-        {
-            // TODO
-        }
     }
 }

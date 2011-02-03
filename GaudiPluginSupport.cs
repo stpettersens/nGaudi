@@ -12,19 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO.Ports;
 
 namespace org.stpettersens.nGaudi
 {
-    class GaudiMessenger
+    static class GaudiPluginSupport
     {
-        public GaudiMessenger(bool logging)
-        {
-
-        }
-        public void Start()
-        {
-            // TODO
-        }
+        // Code to enable or disable plug-in support.
+        public const bool Enabled = true;
     }
 }

@@ -18,17 +18,17 @@ namespace org.stpettersens.nGaudi
 {
     class GaudiLogger
     {
-        private string logFile = "gaudi.log"; // Name for log file
-        private DateTime timestamp = DateTime.Now; // Timestamp is MM-DD-YY HH:MM:SS
-        private bool logging;
+        string logFile = "gaudi.log"; // Name for log file
+        DateTime timestamp = DateTime.Now; // Timestamp is MM-DD-YY HH:MM:SS
+        bool logging;
 
         public GaudiLogger(bool logging)
         {
-            this.logging = true; // logging;
+            this.logging = true; //logging;
         }
         
         // Public method to dump program feedback to the log file
-        public void dump(string message)
+        public void Dump(string message)
         {
             if (this.logging)
             {

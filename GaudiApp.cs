@@ -14,38 +14,38 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace org.stpettersens.nGaudi
 {
-    class GaudiApp
+    static class GaudiApp
     {
-        // ------------------------------------------------------------------
-        private static string appVersion = "0.1";
-        private static int errCode = -2;
-        // ------------------------------------------------------------------
-        private static string buildFile = "build.json"; // Default build file
-        private static bool beVerbose = true; // nGaudi is verbose by default
-        private static bool logging = false;
-        private static GaudiLogger logger = new GaudiLogger(logging);
-        private static bool sSwitch = false;
+        // -----------------------------------------------------------
+        static string cliName = "nGaudi.exe";
+        static string appVersion = "0.1";
+        static int errCode = -2;
+        // -----------------------------------------------------------
+        static string buildFile = "build.json"; // Default build file
+        static bool beVerbose = true; // nGaudi is verbose by default
+        static bool logging = false;
+        static GaudiLogger logger = new GaudiLogger(logging);
+        static GaudiMessenger messenger = new GaudiMessenger(logging);
+        static bool sSwitch = false;
 
         static void Main(string[] args)
         { 
-            //
-            logger.dump("Write to the log.");
-            //
             bool pSwitch = false;
             bool fSwitch = false;
             string action = "build";
-            Regex pluginPattn = new Regex(@"[\w:\/]+.gpod");
-            Regex filePattn = new Regex(@"\w:\/]+.json");
-            Regex actPattn = new Regex(@"[a-z]+");
+            //Regex pluginPattn = new Regex(@"[\w:\/]+.gpod");
+            //Regex filePattn = new Regex(@"\w:\/]+.json");
+            //Regex actPattn = new Regex(@"[a-z]+");
             //Regex cmdPattn = new Regex(@"([a-z]+)\s{1}([\/A-Za-z0-9\s\.\*\+\_\-\>\!\,]+)");
-            string cmd, param;
+            //string cmd, param = null;
 
             /* Default behavior is to build project following
             build file in the current directory */
-            if (args.Length == 0) loadBuild(action);
+            if (args.Length == 0) LoadBuild(action);
 
             // Handle command line arguments
             else if (args.Length > 0 && args.Length < 7)
@@ -55,60 +55,117 @@ namespace org.stpettersens.nGaudi
                     switch (arg)
                     {
                         case "-i":
-                            displayUsage(0);
+                            DisplayUsage(0);
                             break;
                         case "-v":
-                            displayVersion();
+                            DisplayVersion();
+                            break;
+                        case "-l":
+                            logging = true;
+                            break;
+                        case "-s":
+                            sSwitch = true;
+                            break;
+                        case "-n":
+                            GenerateBuildFile();
+                            break;
+                        case "-p":
+                            if (GaudiPluginSupport.Enabled) pSwitch = true;
+                            if (pSwitch) DoPluginAction(arg); // ! <
+                            break;
+                        case "-q":
+                            beVerbose = false;
+                            break;
+                        case "-f":
+                            fSwitch = true;
+                            if (fSwitch) buildFile = arg; // ! <
                             break;
                         default:
+                            DisplayError(String.Format("Argument ({0} is invalid)", arg));
                             break;
-
                     }
                 }
+                if (sSwitch) messenger.Start();
+                //if (cmd != null) runCommand(cmd, param);
+                LoadBuild(action);
             }
+            else DisplayError("Arguments (requires  0-6 arguments)");
         }
-        private static void runCommand(string cmd, string param) 
+        // Just perform a stdin command; really just for testing implemented commands.
+        // E.g. argument ":move a->b"
+        static void RunCommand(string cmd, string param) 
         {
-
+            // Create a new builder to run a command
+            GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);
+            builder.DoCommand(cmd, param);
+            System.Environment.Exit(0);
         }
-        private static void loadBuild(string action)
+        // Load and delegate parse and execution of build file
+        static void LoadBuild(string action)
         {
-
+            string buildConf = null;
+            try
+            {
+                TextReader input = new StreamReader(buildFile);
+                buildConf = input.ReadToEnd();
+                // Shrink string, by replacing tabs with spaces;
+                // Gaudi build files should be written using tabs
+                buildConf = buildConf.Replace("\t", "");
+                //
+                logger.Dump(buildConf);
+                //
+            }
+            catch (IOException ioe)
+            {
+                // Catch I/O exception
+                DisplayError(ioe);
+            }
+            catch (Exception ex)
+            {
+                // Catch another exceptiom
+                DisplayError(ex);
+            }
+            // Delegate to the foreman and builder
+            GaudiForeman foreman = new GaudiForeman(buildConf);
+            GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);
         }
-        private static void generateBuildFile()
+        // Generate a Gaudi build file (build.json)
+        static void GenerateBuildFile()
         {
             // TODO
         }
-        private static void doPluginAction()
+        static void DoPluginAction(string plugin)
         {
 
         }
         // Display an error
-        public static void displayError(Exception ex)
+        public static void DisplayError(Exception ex)
         {
-            Console.WriteLine("\nError with: {0}.", ex.Message);
-            logger.dump(ex.Message);
-            displayUsage(errCode);
+            Console.WriteLine("\nError: {0}.", ex.Message);
+            logger.Dump(ex.Message);
+            DisplayUsage(errCode);
         }
         // Overloaded for string parameter
-        public static void displayError(string ex)
+        public static void DisplayError(string ex)
         {
-            Console.WriteLine("\nError with: {0}.", ex);
-            logger.dump(ex);
-            displayUsage(errCode);
+            Console.WriteLine("\nError: {0}.", ex);
+            logger.Dump(ex);
+            DisplayUsage(errCode);
         }
         // Display version information and exit
-        private static void displayVersion()
+        static void DisplayVersion()
         {
-            Console.WriteLine("nGaudi v.{0}", appVersion);
+            Console.WriteLine("nGaudi v.{0} [CLR {1} ({2})]", appVersion, 
+            System.Environment.Version, System.Environment.OSVersion);
             System.Environment.Exit(0);
         }
-        private static void displayUsage(int exitCode) 
+        // Display usage information and exit
+        static void DisplayUsage(int exitCode) 
         {
             Console.WriteLine("\nnGaudi platform agnostic build tool");
             Console.WriteLine("Copyright (c) 2011 Sam Saint-Pettersen");
             Console.WriteLine("\nReleased under the MIT/X11 License.");
-            Console.WriteLine("\nUsage: ngaudi [-s <port>][-l][-i|-v|-n|-m][-q]");
+            Console.WriteLine("\nUsage: {0} [-s <port>][-l][-i|-v|-n|-m][-q]", cliName);
             Console.WriteLine("[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]");
             Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
             Console.WriteLine("-l: Enable logging of certain events.");
@@ -118,7 +175,6 @@ namespace org.stpettersens.nGaudi
             Console.WriteLine("-p: Invoke <plug-in> action.");
             Console.WriteLine("-q: Mute console output, except for :echo and errors (Quiet mode).");
             Console.WriteLine("-f: Use <build file> instead of build.json.");
-            Console.ReadLine();
             System.Environment.Exit(exitCode);
         }
     }

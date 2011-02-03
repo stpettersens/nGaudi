@@ -12,19 +12,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO.Ports;
+using Newtonsoft.Json;
 
 namespace org.stpettersens.nGaudi
 {
-    class GaudiMessenger
+    class GaudiBuilder
     {
-        public GaudiMessenger(bool logging)
+        public GaudiBuilder(Object preamble, bool sSwitch, bool beVerbose, bool logging)
+        {
+            // Define global logging object
+            GaudiLogger logger = new GaudiLogger(logging);
+        }
+        // Execute a command in the action
+        public void DoCommand(string command, string param)
         {
 
-        }
-        public void Start()
-        {
-            // TODO
         }
     }
 }
