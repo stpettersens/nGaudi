@@ -111,9 +111,6 @@ namespace org.stpettersens.nGaudi
                 // Shrink string, by replacing tabs with spaces;
                 // Gaudi build files should be written using tabs
                 buildConf = buildConf.Replace("\t", "");
-                //
-                logger.Dump(buildConf);
-                //
             }
             catch (IOException ioe)
             {
@@ -125,6 +122,9 @@ namespace org.stpettersens.nGaudi
                 // Catch another exceptiom
                 DisplayError(ex);
             }
+            //
+            logger.Dump(buildConf);
+            //
             // Delegate to the foreman and builder
             GaudiForeman foreman = new GaudiForeman(buildConf);
             GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);
