@@ -35,7 +35,7 @@ namespace org.stpettersens.nGaudi
             catch (JsonReaderException jex)
             {
                 GaudiApp.DisplayError(
-                    String.Format("Instructions (Badly formatted JSON) ->\n {0}", jex.Message)
+                    String.Format("Badly formatted JSON\n {0}", jex.Message)
                 );
             }
             return json;

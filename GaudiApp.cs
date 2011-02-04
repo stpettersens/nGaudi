@@ -141,14 +141,14 @@ namespace org.stpettersens.nGaudi
         // Display an error
         public static void DisplayError(Exception ex)
         {
-            Console.WriteLine("\nError: {0}.", ex.Message);
+            Console.WriteLine("\nError: {0}", ex.Message);
             logger.Dump(ex.Message);
             DisplayUsage(errCode);
         }
         // Overloaded for string parameter
         public static void DisplayError(string ex)
         {
-            Console.WriteLine("\nError: {0}.", ex);
+            Console.WriteLine("\nError: {0}", ex);
             logger.Dump(ex);
             DisplayUsage(errCode);
         }
