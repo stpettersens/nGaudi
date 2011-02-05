@@ -1,6 +1,6 @@
 ﻿/*
 nGaudi platform agnostic build tool on .NET
-Copyright (C) 2011 Sam Saint-Pettersen.
+Copyright (c) 2011 Sam Saint-Pettersen.
 
 nGaudi is a .NET rewrite of the original Gaudi tool which was written for
 the Java Virtual Machine (JVM).
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace org.stpettersens.nGaudi
+namespace Stpettersens.nGaudi
 {
     static class GaudiPluginSupport
     {

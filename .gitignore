@@ -1,10 +1,5 @@
 bin
 obj
 *.exe
-*.dll
 *.log
 *.suo
-*.pdb
-*.pidb
-*.userprefs
-

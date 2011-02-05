@@ -1,6 +1,6 @@
 ﻿/*
 nGaudi platform agnostic build tool on .NET
-Copyright (C) 2011 Sam Saint-Pettersen.
+Copyright (c) 2011 Sam Saint-Pettersen.
 
 nGaudi is a .NET rewrite of the original Gaudi tool which was written for
 the Java Virtual Machine (JVM).
@@ -9,36 +9,48 @@ Licensed under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Procurios.Public;
 
-namespace org.stpettersens.nGaudi
+namespace Stpettersens.nGaudi
 {
     class GaudiForeman
     {
         string buildConf;
+        Hashtable buildJson;
+        ArrayList[] actions;
+
         public GaudiForeman(string buildConf)
         {
             this.buildConf = buildConf;
-            JObject buildJson = this.ParseBuildJson();
+
+            // Parse build config into JSON Hashtable on initialization
+            buildJson = this.ParseBuildJson();
+            this.ParseEachAction();   
         }
-        JObject ParseBuildJson()
+        Hashtable ParseBuildJson()
         {
-            JObject json = null;
             try
             {
-                json = JsonConvert.DeserializeObject<JObject>(this.buildConf);
+                return (Hashtable)JSON.JsonDecode(buildConf);
             }
-            catch (JsonReaderException jex)
+            catch (Exception)
             {
-                GaudiApp.DisplayError(
-                    String.Format("Badly formatted JSON\n {0}", jex.Message)
-                );
+                // Need to modify JSON.cs to throw exceptions
+                GaudiApp.DisplayError("Badly formatted JSON instructions");
             }
-            return json;
+            return null;
+        }
+        void ParseEachAction()
+        {
+            foreach (DictionaryEntry x in buildJson)
+            {
+                Console.WriteLine(x.Key);
+            }
+            Console.ReadLine();
         }
     }
 }

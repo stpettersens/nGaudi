@@ -1,6 +1,6 @@
 ﻿/*
 nGaudi platform agnostic build tool on .NET
-Copyright (C) 2011 Sam Saint-Pettersen.
+Copyright (c) 2011 Sam Saint-Pettersen.
 
 nGaudi is a .NET rewrite of the original Gaudi tool which was written for
 the Java Virtual Machine (JVM).
@@ -14,9 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
-using Newtonsoft.Json;
 
-namespace org.stpettersens.nGaudi
+namespace Stpettersens.nGaudi
 {
     static class GaudiApp
     {
@@ -141,14 +140,14 @@ namespace org.stpettersens.nGaudi
         // Display an error
         public static void DisplayError(Exception ex)
         {
-            Console.WriteLine("\nError: {0}", ex.Message);
+            Console.WriteLine("\nError: {0}.", ex.Message);
             logger.Dump(ex.Message);
             DisplayUsage(errCode);
         }
         // Overloaded for string parameter
         public static void DisplayError(string ex)
         {
-            Console.WriteLine("\nError: {0}", ex);
+            Console.WriteLine("\nError: {0}.", ex);
             logger.Dump(ex);
             DisplayUsage(errCode);
         }
