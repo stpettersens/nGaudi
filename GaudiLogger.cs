@@ -1,4 +1,4 @@
-﻿/*
+/*
 nGaudi platform agnostic build tool on .NET
 Copyright (c) 2011 Sam Saint-Pettersen.
 
@@ -40,7 +40,9 @@ namespace Stpettersens.nGaudi
                 }
                 catch (IOException ioe)
                 {
-                    Console.WriteLine("[Logging error: {0}", ioe.Message);
+                    GaudiApp.DisplayError(
+					String.Format("[Logging error: {0}]", ioe.Message)
+					);
                 }
                 finally
                 {
