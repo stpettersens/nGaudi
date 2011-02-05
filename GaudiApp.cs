@@ -118,7 +118,7 @@ namespace Stpettersens.nGaudi
             }
             catch (Exception ex)
             {
-                // Catch another exceptiom
+                // Catch another exception
                 DisplayError(ex);
             }
             //
