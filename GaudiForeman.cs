@@ -1,4 +1,3 @@
-﻿
 /*
 nGaudi platform agnostic build tool on .NET
 Copyright (c) 2011 Sam Saint-Pettersen.

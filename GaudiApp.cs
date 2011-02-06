@@ -1,4 +1,4 @@
-﻿/*
+/*
 nGaudi platform agnostic build tool on .NET
 Copyright (c) 2011 Sam Saint-Pettersen.
 
@@ -126,9 +126,6 @@ namespace Stpettersens.nGaudi
                 // Catch another exception
                 DisplayError(ex);
             }
-            //
-            logger.Dump(buildConf);
-            //
             // Delegate to the foreman and builder
             GaudiForeman foreman = new GaudiForeman(buildConf);
             GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);

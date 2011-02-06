@@ -3,3 +3,6 @@ obj
 *.exe
 *.log
 *.suo
+*.userprefs
+*.pidb
+
