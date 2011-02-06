@@ -40,7 +40,7 @@ namespace Stpettersens.nGaudi
             //Regex filePattn = new Regex(@"\w:\/]+.json");
             //Regex actPattn = new Regex(@"[a-z]+");
             //Regex cmdPattn = new Regex(@"([a-z]+)\s{1}([\/A-Za-z0-9\s\.\*\+\_\-\>\!\,]+)");
-            //string cmd, param = null;
+            string cmd, param = null;
 
             /* Default behavior is to build project following
             build file in the current directory */
@@ -80,7 +80,12 @@ namespace Stpettersens.nGaudi
                             if (fSwitch) buildFile = arg; // ! <
                             break;
                         default:
-                            DisplayError(String.Format("Argument ({0} is invalid)", arg));
+                            //DispayError(String.Format("Argument ({0} is invalid)", arg));
+                            // --------------------
+                            cmd = arg;
+                            param = null;
+                            RunCommand(cmd, param);
+                            // --------------------
                             break;
                     }
                 }
@@ -140,14 +145,14 @@ namespace Stpettersens.nGaudi
         // Display an error
         public static void DisplayError(Exception ex)
         {
-            Console.WriteLine("\nError: {0}.", ex.Message);
+            Console.WriteLine("\nError: {0}", ex.Message);
             logger.Dump(ex.Message);
             DisplayUsage(errCode);
         }
         // Overloaded for string parameter
         public static void DisplayError(string ex)
         {
-            Console.WriteLine("\nError: {0}.", ex);
+            Console.WriteLine("\nError: {0}", ex);
             logger.Dump(ex);
             DisplayUsage(errCode);
         }
@@ -155,8 +160,8 @@ namespace Stpettersens.nGaudi
         static void DisplayVersion()
         {
             Console.WriteLine("nGaudi v.{0} [CLR {1} ({2})]", appVersion, 
-            System.Environment.Version, System.Environment.OSVersion);
-            System.Environment.Exit(0);
+            Environment.Version, Environment.OSVersion);
+            Environment.Exit(0);
         }
         // Display usage information and exit
         static void DisplayUsage(int exitCode) 
@@ -174,7 +179,7 @@ namespace Stpettersens.nGaudi
             Console.WriteLine("-p: Invoke <plug-in> action.");
             Console.WriteLine("-q: Mute console output, except for :echo and errors (Quiet mode).");
             Console.WriteLine("-f: Use <build file> instead of build.json.");
-            System.Environment.Exit(exitCode);
+            Environment.Exit(exitCode);
         }
     }
 }

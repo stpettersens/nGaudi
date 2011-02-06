@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+using System.IO;
 
 namespace Stpettersens.nGaudi
 {
@@ -31,7 +33,7 @@ namespace Stpettersens.nGaudi
         // Print an error related to action or command and exit
         void PrintError(string error)
         {
-            Console.WriteLine("\tAborting: %s.", error);
+            Console.WriteLine("\tAborting: {0}", error);
             logger.Dump(error); // Also log it
             Environment.Exit(-2); // Exit application with error code
         }
@@ -43,7 +45,14 @@ namespace Stpettersens.nGaudi
                 Console.WriteLine("\t:{0} {1}", command, param);
             }
         }
-
+        // Execute an external process
+        void ExecExternal(string param)
+        {
+            logger.Dump(String.Format("Executed -> {0}", param));
+            Process p = new Process();
+            p.StartInfo.FileName = param;
+            p.Start();
+        }
         // Execute a command in the action
         public void DoCommand(string command, string param)
         {
@@ -52,7 +61,15 @@ namespace Stpettersens.nGaudi
             switch (command)
             {
                 case "exec":
-                    //
+                    ExecExternal(param);
+                    break;
+                case "mkdir":
+                    DirectoryInfo aDir = new DirectoryInfo("aDir"); // (param);
+                    if (aDir.Exists)
+                    {
+                        PrintError("Directory already exists.");
+                    }
+                    aDir.Create();
                     break;
                 default:
                     PrintError(String.Format("{0} is an invalid command", command));

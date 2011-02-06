@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
 nGaudi platform agnostic build tool on .NET
 Copyright (c) 2011 Sam Saint-Pettersen.
 
@@ -21,7 +22,7 @@ namespace Stpettersens.nGaudi
     {
         string buildConf;
         Hashtable buildJson;
-        ArrayList[] actions;
+        //ArrayList[] actions;
 
         public GaudiForeman(string buildConf)
         {
