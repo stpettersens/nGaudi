@@ -20,9 +20,9 @@ namespace Stpettersens.nGaudi
     static class GaudiApp
     {
         // -----------------------------------------------------------
-        static string cliName = "nGaudi.exe";
-        static string appVersion = "0.1";
-        static int errCode = -2;
+        const string cliName = "nGaudi";
+        const string appVersion = "0.1";
+        public const int errCode = -2;
         // -----------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
         static bool beVerbose = true; // nGaudi is verbose by default
@@ -39,8 +39,7 @@ namespace Stpettersens.nGaudi
             //Regex pluginPattn = new Regex(@"[\w:\/]+.gpod");
             //Regex filePattn = new Regex(@"\w:\/]+.json");
             //Regex actPattn = new Regex(@"[a-z]+");
-            //Regex cmdPattn = new Regex(@"([a-z]+)\s{1}([\/A-Za-z0-9\s\.\*\+\_\-\>\!\,]+)");
-            string cmd, param = null;
+            //Regex cmdPattn = new Regex(@"(:[a-z]+)\s{1}([\/A-Za-z0-9\s\.\*\+\_\-\>\!\,]+)");
 
             /* Default behavior is to build project following
             build file in the current directory */
@@ -49,8 +48,10 @@ namespace Stpettersens.nGaudi
             // Handle command line arguments
             else if (args.Length > 0 && args.Length < 7)
             {
+                int i = 0;
                 foreach (string arg in args)
                 {
+                    i++;
                     switch (arg)
                     {
                         case "-i":
@@ -69,24 +70,19 @@ namespace Stpettersens.nGaudi
                             GenerateBuildFile();
                             break;
                         case "-p":
-                            if (GaudiPluginSupport.Enabled) pSwitch = true;
-                            if (pSwitch) DoPluginAction(arg); // ! <
+                            DoPluginAction(args[i]);
                             break;
                         case "-q":
                             beVerbose = false;
                             break;
                         case "-f":
-                            fSwitch = true;
-                            if (fSwitch) buildFile = arg; // ! <
+                            buildFile = args[i];
                             break;
-                        default:
-                            //DispayError(String.Format("Argument ({0} is invalid)", arg));
-                            // --------------------
-                            cmd = arg;
-                            param = null;
-                            RunCommand(cmd, param);
-                            // --------------------
-                            break;
+                    }
+                    if (arg.StartsWith(":"))
+                    {
+                        string[] cmdParam = Regex.Split(arg, " ");
+                        RunCommand(cmdParam[0].Replace(":", ""), cmdParam[1]);
                     }
                 }
                 if (sSwitch) messenger.Start();

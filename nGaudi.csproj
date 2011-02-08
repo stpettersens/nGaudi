@@ -8,7 +8,7 @@
     <ProjectGuid>{78FA957D-3564-4931-A817-F60CE657C1A6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>org.stpettersens.nGaudi</RootNamespace>
+    <RootNamespace>Stpettersens.nGaudi</RootNamespace>
     <AssemblyName>nGaudi</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -46,6 +46,7 @@
     <Compile Include="GaudiApp.cs" />
     <Compile Include="GaudiBuilder.cs" />
     <Compile Include="GaudiForeman.cs" />
+    <Compile Include="GaudiIO.cs" />
     <Compile Include="GaudiLogger.cs" />
     <Compile Include="GaudiMessenger.cs" />
     <Compile Include="GaudiPluginSupport.cs" />

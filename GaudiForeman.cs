@@ -50,7 +50,6 @@ namespace Stpettersens.nGaudi
             {
                 Console.WriteLine(x.Key);
             }
-            Console.ReadLine();
         }
     }
 }

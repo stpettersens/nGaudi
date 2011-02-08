@@ -12,12 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace Stpettersens.nGaudi
 {
     class GaudiLogger
     {
+        GaudiIO io;
         string logFile = "gaudi.log"; // Name for log file
         DateTime timestamp = DateTime.Now; // Timestamp is MM-DD-YY HH:MM:SS
         bool logging;
@@ -25,6 +25,7 @@ namespace Stpettersens.nGaudi
         public GaudiLogger(bool logging)
         {
             this.logging = true; //logging;
+            io = new GaudiIO(logging);
         }
         
         // Public method to dump program feedback to the log file
@@ -32,22 +33,9 @@ namespace Stpettersens.nGaudi
         {
             if (this.logging)
             {
-                StreamWriter output = File.AppendText(logFile);
-                try
-                {
-                    output.WriteLine("[{0}]", timestamp);
-                    output.WriteLine(message);
-                }
-                catch (IOException ioe)
-                {
-                    GaudiApp.DisplayError(
-					String.Format("[Logging error: {0}]", ioe.Message)
-					);
-                }
-                finally
-                {
-                    output.Close();
-                }
+                io.WriteToFile(
+                    logFile, String.Format("[{0}]\n{1}", timestamp, message), true
+                );
             }
         }
     }

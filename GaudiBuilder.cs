@@ -12,15 +12,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics;
-using System.IO;
+using System.Text.RegularExpressions;
+
 
 namespace Stpettersens.nGaudi
 {
     class GaudiBuilder
     {
         bool beVerbose;
-        GaudiLogger logger;
+        static GaudiLogger logger;
+        GaudiIO io;
 
         public GaudiBuilder(Object preamble, bool sSwitch, 
         bool beVerbose, bool logging)
@@ -29,13 +30,16 @@ namespace Stpettersens.nGaudi
 
             // Define global logging object
             logger = new GaudiLogger(logging);
+
+            // Define global IO object
+            io = new GaudiIO(logging);
         }
         // Print an error related to action or command and exit
-        void PrintError(string error)
+        public static void PrintError(string error)
         {
-            Console.WriteLine("\tAborting: {0}", error);
+            Console.WriteLine("\tAborting: {0}.", error);
             logger.Dump(error); // Also log it
-            Environment.Exit(-2); // Exit application with error code
+            Environment.Exit(GaudiApp.errCode); // Exit application with error code
         }
         // Print executed command
         void PrintCommand(string command, string param)
@@ -45,14 +49,8 @@ namespace Stpettersens.nGaudi
                 Console.WriteLine("\t:{0} {1}", command, param);
             }
         }
-        // Execute an external process
-        void ExecExternal(string param)
-        {
-            logger.Dump(String.Format("Executed -> {0}", param));
-            Process p = new Process();
-            p.StartInfo.FileName = param;
-            p.Start();
-        }
+
+ 
         // Execute a command in the action
         public void DoCommand(string command, string param)
         {
@@ -61,15 +59,38 @@ namespace Stpettersens.nGaudi
             switch (command)
             {
                 case "exec":
-                    ExecExternal(param);
+                    io.ExecExtern(param);
                     break;
                 case "mkdir":
-                    DirectoryInfo aDir = new DirectoryInfo("aDir"); // (param);
-                    if (aDir.Exists)
-                    {
-                        PrintError("Directory already exists.");
-                    }
-                    aDir.Create();
+                    io.ManipulateDir(param, 0);
+                    break;
+                case "rmdir":
+                    io.ManipulateDir(param, 1);
+                    break;
+                case "list":
+                    // TODO
+                    break;
+                case "echo":
+                    Console.WriteLine("\t# {0}", param);
+                    break;
+                case "erase":
+                    io.ManipulateFile(param, 1);
+                    break;
+                case "copy":
+                    // TODO
+                    break;
+                case "rcopy":
+                    // TODO
+                    break;
+                case "move":
+                    // TODO
+                    break;
+                // Append message to a file
+                // Usage in buildfile: { "append": file>>message" }
+                // Equivalent to *nix's echo "message" >> file
+                case "append":
+                    string[] fileMsg = Regex.Split(param, ">>");
+                    io.WriteToFile(fileMsg[0], fileMsg[1], true);
                     break;
                 default:
                     PrintError(String.Format("{0} is an invalid command", command));
