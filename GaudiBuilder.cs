@@ -17,30 +17,22 @@ using System.Text.RegularExpressions;
 
 namespace Stpettersens.nGaudi
 {
-    class GaudiBuilder
+    class GaudiBuilder : GaudiBase
     {
-        bool beVerbose;
-        static GaudiLogger logger;
         GaudiIO io;
+        GaudiLogger logger;
+        bool beVerbose;
 
-        public GaudiBuilder(Object preamble, bool sSwitch, 
-        bool beVerbose, bool logging)
+        public GaudiBuilder(Object preamble, bool sSwitch, bool beVerbose, bool logging)
         {
             this.beVerbose = beVerbose;
+            base.logging = logging;
 
-            // Define global logging object
+            // Define global IO and logger object
+            io = new GaudiIO();
             logger = new GaudiLogger(logging);
+        }
 
-            // Define global IO object
-            io = new GaudiIO(logging);
-        }
-        // Print an error related to action or command and exit
-        public static void PrintError(string error)
-        {
-            Console.WriteLine("\tAborting: {0}.", error);
-            logger.Dump(error); // Also log it
-            Environment.Exit(GaudiApp.errCode); // Exit application with error code
-        }
         // Print executed command
         void PrintCommand(string command, string param)
         {
@@ -50,7 +42,6 @@ namespace Stpettersens.nGaudi
             }
         }
 
- 
         // Execute a command in the action
         public void DoCommand(string command, string param)
         {
@@ -62,10 +53,10 @@ namespace Stpettersens.nGaudi
                     io.ExecExtern(param);
                     break;
                 case "mkdir":
-                    io.ManipulateDir(param, 0);
+                    io.ManipulateDir(param, GaudiIO.DirActions.CREATE);
                     break;
                 case "rmdir":
-                    io.ManipulateDir(param, 1);
+                    io.ManipulateDir(param, GaudiIO.DirActions.ERASE);
                     break;
                 case "list":
                     // TODO
@@ -74,7 +65,7 @@ namespace Stpettersens.nGaudi
                     Console.WriteLine("\t# {0}", param);
                     break;
                 case "erase":
-                    io.ManipulateFile(param, 1);
+                    io.ManipulateFile(param, GaudiIO.FileActions.ERASE);
                     break;
                 case "copy":
                     // TODO

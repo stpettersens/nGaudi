@@ -17,12 +17,11 @@ using System.IO;
 
 namespace Stpettersens.nGaudi
 {
-    static class GaudiApp
+    static class GaudiApp : GaudiBase
     {
         // -----------------------------------------------------------
         const string cliName = "nGaudi";
         const string appVersion = "0.1";
-        public const int errCode = -2;
         // -----------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
         static bool beVerbose = true; // nGaudi is verbose by default
@@ -33,13 +32,7 @@ namespace Stpettersens.nGaudi
 
         static void Main(string[] args)
         { 
-            bool pSwitch = false;
-            bool fSwitch = false;
             string action = "build";
-            //Regex pluginPattn = new Regex(@"[\w:\/]+.gpod");
-            //Regex filePattn = new Regex(@"\w:\/]+.json");
-            //Regex actPattn = new Regex(@"[a-z]+");
-            //Regex cmdPattn = new Regex(@"(:[a-z]+)\s{1}([\/A-Za-z0-9\s\.\*\+\_\-\>\!\,]+)");
 
             /* Default behavior is to build project following
             build file in the current directory */
@@ -135,20 +128,7 @@ namespace Stpettersens.nGaudi
         {
 
         }
-        // Display an error
-        public static void DisplayError(Exception ex)
-        {
-            Console.WriteLine("\nError: {0}", ex.Message);
-            logger.Dump(ex.Message);
-            DisplayUsage(errCode);
-        }
-        // Overloaded for string parameter
-        public static void DisplayError(string ex)
-        {
-            Console.WriteLine("\nError: {0}", ex);
-            logger.Dump(ex);
-            DisplayUsage(errCode);
-        }
+  
         // Display version information and exit
         static void DisplayVersion()
         {
@@ -157,7 +137,7 @@ namespace Stpettersens.nGaudi
             Environment.Exit(0);
         }
         // Display usage information and exit
-        static void DisplayUsage(int exitCode) 
+        public static void DisplayUsage(int exitCode) 
         {
             Console.WriteLine("\nnGaudi platform agnostic build tool");
             Console.WriteLine("Copyright (c) 2011 Sam Saint-Pettersen");

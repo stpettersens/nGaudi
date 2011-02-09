@@ -15,9 +15,8 @@ using System.Text;
 
 namespace Stpettersens.nGaudi
 {
-    class GaudiLogger
+    class GaudiLogger : GaudiIO
     {
-        GaudiIO io;
         string logFile = "gaudi.log"; // Name for log file
         DateTime timestamp = DateTime.Now; // Timestamp is MM-DD-YY HH:MM:SS
         bool logging;
@@ -25,7 +24,6 @@ namespace Stpettersens.nGaudi
         public GaudiLogger(bool logging)
         {
             this.logging = true; //logging;
-            io = new GaudiIO(logging);
         }
         
         // Public method to dump program feedback to the log file
@@ -33,7 +31,7 @@ namespace Stpettersens.nGaudi
         {
             if (this.logging)
             {
-                io.WriteToFile(
+                WriteToFile(
                     logFile, String.Format("[{0}]\n{1}", timestamp, message), true
                 );
             }

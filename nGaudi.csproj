@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GaudiApp.cs" />
+    <Compile Include="GaudiBase.cs" />
     <Compile Include="GaudiBuilder.cs" />
     <Compile Include="GaudiForeman.cs" />
     <Compile Include="GaudiIO.cs" />

@@ -18,11 +18,13 @@ using System.IO;
 namespace Stpettersens.nGaudi
 {
 
-    class GaudiIO
+    class GaudiIO : GaudiBase
     {
         GaudiLogger logger;
+        public enum DirActions { CREATE, ERASE };
+        public enum FileActions { CREATE, ERASE };
 
-        public GaudiIO(bool logging)
+        public GaudiIO()
         {
             logger = new GaudiLogger(logging);
         }
@@ -39,7 +41,7 @@ namespace Stpettersens.nGaudi
             }
             catch (IOException ioe)
             {
-                GaudiBuilder.PrintError(ioe.Message);
+                PrintError(ioe.Message);
             }
             finally
             {
@@ -47,46 +49,47 @@ namespace Stpettersens.nGaudi
             }
         }
         // File manipulation operations
-        public void ManipulateFile(string file, byte action)
+        public void ManipulateFile(string file, FileActions action)
         {
 
             FileInfo aFile = new FileInfo(file);
             switch (action)
             {
-                case 0: // Create a blank file
+                case FileActions.CREATE: // Create a blank file
                     if (aFile.Exists)
                     {
-                        GaudiBuilder.PrintError(String.Format("File \'{0}\' already exists", file));
+                        PrintError(String.Format("File \'{0}\' already exists", file));
                     }
                     aFile.Create();
                     break;
-                case 1: // Delete a file
+
+                case FileActions.ERASE: // Erase a file
                     if (!aFile.Exists)
                     {
-                        GaudiBuilder.PrintError(String.Format("File \'{0}\' does not exist", file));
+                        PrintError(String.Format("File \'{0}\' does not exist", file));
                     }
                     aFile.Delete();
                     break;
             }
         }
         // Directory manipulation operations
-        public void ManipulateDir(string dir, byte action)
+        public void ManipulateDir(string dir, DirActions action)
         {
 
             DirectoryInfo aDir = new DirectoryInfo(dir);
             switch (action)
             {
-                case 0: // Create a directory
+                case DirActions.CREATE: // Create a directory
                     if (aDir.Exists)
                     {
-                        GaudiBuilder.PrintError(String.Format("Directory \'{0}\' already exists", dir));
+                        PrintError(String.Format("Directory \'{0}\' already exists", dir));
                     }
                     aDir.Create();
                     break;
-                case 1: // Delete a directory
+                case DirActions.ERASE: // Erase a directory
                     if (!aDir.Exists)
                     {
-                        GaudiBuilder.PrintError(String.Format("Directory \'{0}\' does not exist", dir));
+                        PrintError(String.Format("Directory \'{0}\' does not exist", dir));
                     }
                     aDir.Delete();
                     break;
