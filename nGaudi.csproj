@@ -48,7 +48,6 @@
     <Compile Include="GaudiBuilder.cs" />
     <Compile Include="GaudiForeman.cs" />
     <Compile Include="GaudiIO.cs" />
-    <Compile Include="GaudiLogger.cs" />
     <Compile Include="GaudiMessenger.cs" />
     <Compile Include="GaudiPluginSupport.cs" />
     <Compile Include="JSON.cs" />

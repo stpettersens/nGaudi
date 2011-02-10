@@ -17,19 +17,19 @@ using Procurios.Public;
 
 namespace Stpettersens.nGaudi
 {
-    class GaudiForeman
+    class GaudiForeman : GaudiBase
     {
         string buildConf;
         Hashtable buildJson;
-        //ArrayList[] actions;
+        ArrayList[] actions;
 
         public GaudiForeman(string buildConf)
         {
             this.buildConf = buildConf;
 
             // Parse build config into JSON Hashtable on initialization
-            buildJson = this.ParseBuildJson();
-            this.ParseEachAction();   
+            buildJson = ParseBuildJson();
+            //ParseEachAction();   
         }
         Hashtable ParseBuildJson()
         {
@@ -40,7 +40,7 @@ namespace Stpettersens.nGaudi
             catch (Exception)
             {
                 // Need to modify JSON.cs to throw exceptions
-                GaudiApp.DisplayError("Badly formatted JSON instructions");
+                DisplayUsageError("Badly formatted JSON instructions");
             }
             return null;
         }

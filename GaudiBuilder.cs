@@ -14,29 +14,20 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-
 namespace Stpettersens.nGaudi
 {
-    class GaudiBuilder : GaudiBase
+    class GaudiBuilder : GaudiIO
     {
-        GaudiIO io;
-        GaudiLogger logger;
-        bool beVerbose;
-
-        public GaudiBuilder(Object preamble, bool sSwitch, bool beVerbose, bool logging)
+        public GaudiBuilder(): this(null) {}
+        public GaudiBuilder(Object preamble)
         {
-            this.beVerbose = beVerbose;
-            base.logging = logging;
-
-            // Define global IO and logger object
-            io = new GaudiIO();
-            logger = new GaudiLogger(logging);
+         
         }
 
         // Print executed command
         void PrintCommand(string command, string param)
         {
-            if (beVerbose && command != "echo")
+            if (isVerbose() && command != "echo")
             {
                 Console.WriteLine("\t:{0} {1}", command, param);
             }
@@ -50,13 +41,13 @@ namespace Stpettersens.nGaudi
             switch (command)
             {
                 case "exec":
-                    io.ExecExtern(param);
+                    ExecExtern(param);
                     break;
                 case "mkdir":
-                    io.ManipulateDir(param, GaudiIO.DirActions.CREATE);
+                    ManipulateDir(param, GaudiIO.DirActions.CREATE);
                     break;
                 case "rmdir":
-                    io.ManipulateDir(param, GaudiIO.DirActions.ERASE);
+                    ManipulateDir(param, GaudiIO.DirActions.ERASE);
                     break;
                 case "list":
                     // TODO
@@ -65,7 +56,7 @@ namespace Stpettersens.nGaudi
                     Console.WriteLine("\t# {0}", param);
                     break;
                 case "erase":
-                    io.ManipulateFile(param, GaudiIO.FileActions.ERASE);
+                    ManipulateFile(param, GaudiIO.FileActions.ERASE);
                     break;
                 case "copy":
                     // TODO
@@ -81,7 +72,7 @@ namespace Stpettersens.nGaudi
                 // Equivalent to *nix's echo "message" >> file
                 case "append":
                     string[] fileMsg = Regex.Split(param, ">>");
-                    io.WriteToFile(fileMsg[0], fileMsg[1], true);
+                    WriteToFile(fileMsg[0], fileMsg[1], true);
                     break;
                 default:
                     PrintError(String.Format("{0} is an invalid command", command));

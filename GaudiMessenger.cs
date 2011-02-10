@@ -16,9 +16,9 @@ using System.IO.Ports;
 
 namespace Stpettersens.nGaudi
 {
-    class GaudiMessenger
+    class GaudiMessenger : GaudiBase
     {
-        public GaudiMessenger(bool logging)
+        public GaudiMessenger()
         {
 
         }

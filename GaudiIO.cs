@@ -20,17 +20,24 @@ namespace Stpettersens.nGaudi
 
     class GaudiIO : GaudiBase
     {
-        GaudiLogger logger;
-        public enum DirActions { CREATE, ERASE };
-        public enum FileActions { CREATE, ERASE };
+        protected enum DirActions { CREATE, ERASE };
+        protected enum FileActions { CREATE, ERASE };
+        protected string logFile = "gaudi.log";
 
-        public GaudiIO()
+        // Protected method to dump program feedback to the log file
+        protected void logDump(string message)
         {
-            logger = new GaudiLogger(logging);
+            DateTime timestamp = DateTime.Now;
+            if (isLogging())
+            {
+                WriteToFile(
+                    logFile, String.Format("[{0}]\n{1}", timestamp, message), true
+                );
+            }
         }
 
         // File writing operations
-        public void WriteToFile(string file, string message, bool append)
+        protected void WriteToFile(string file, string message, bool append)
         {
             StreamWriter output;
             if (append) output = File.AppendText(file);
@@ -49,7 +56,7 @@ namespace Stpettersens.nGaudi
             }
         }
         // File manipulation operations
-        public void ManipulateFile(string file, FileActions action)
+        protected void ManipulateFile(string file, FileActions action)
         {
 
             FileInfo aFile = new FileInfo(file);
@@ -73,7 +80,7 @@ namespace Stpettersens.nGaudi
             }
         }
         // Directory manipulation operations
-        public void ManipulateDir(string dir, DirActions action)
+        protected void ManipulateDir(string dir, DirActions action)
         {
 
             DirectoryInfo aDir = new DirectoryInfo(dir);
@@ -97,9 +104,9 @@ namespace Stpettersens.nGaudi
         }
 
         // Execute an external process
-        public void ExecExtern(string param)
+        protected void ExecExtern(string param)
         {
-            logger.Dump(String.Format("Executed -> {0}", param));
+            logDump(String.Format("Executed -> {0}", param));
             Process p = new Process();
             p.StartInfo.FileName = param;
             p.Start();

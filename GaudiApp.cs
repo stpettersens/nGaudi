@@ -17,18 +17,16 @@ using System.IO;
 
 namespace Stpettersens.nGaudi
 {
-    static class GaudiApp : GaudiBase
+    class GaudiApp
     {
         // -----------------------------------------------------------
         const string cliName = "nGaudi";
         const string appVersion = "0.1";
         // -----------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
-        static bool beVerbose = true; // nGaudi is verbose by default
-        static bool logging = false;
-        static GaudiLogger logger = new GaudiLogger(logging);
-        static GaudiMessenger messenger = new GaudiMessenger(logging);
-        static bool sSwitch = false;
+        static GaudiBase b = new GaudiBase();
+        static GaudiLogger logger = new GaudiLogger();
+        static GaudiMessenger messenger = new GaudiMessenger();
 
         static void Main(string[] args)
         { 
@@ -54,10 +52,11 @@ namespace Stpettersens.nGaudi
                             DisplayVersion();
                             break;
                         case "-l":
-                            logging = true;
+                            b.enableLogging(true);
+                            Console.Title = b.isLogging().ToString();
                             break;
                         case "-s":
-                            sSwitch = true;
+                            messenger.Start();
                             break;
                         case "-n":
                             GenerateBuildFile();
@@ -66,7 +65,7 @@ namespace Stpettersens.nGaudi
                             DoPluginAction(args[i]);
                             break;
                         case "-q":
-                            beVerbose = false;
+                            b.enableVerbosity(false);
                             break;
                         case "-f":
                             buildFile = args[i];
@@ -78,18 +77,16 @@ namespace Stpettersens.nGaudi
                         RunCommand(cmdParam[0].Replace(":", ""), cmdParam[1]);
                     }
                 }
-                if (sSwitch) messenger.Start();
-                //if (cmd != null) runCommand(cmd, param);
                 LoadBuild(action);
             }
-            else DisplayError("Arguments (requires  0-6 arguments)");
+            else b.DisplayUsageError("Arguments (requires  0-6 arguments)");
         }
         // Just perform a stdin command; really just for testing implemented commands.
         // E.g. argument ":move a->b"
         static void RunCommand(string cmd, string param) 
         {
             // Create a new builder to run a command
-            GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);
+            GaudiBuilder builder = new GaudiBuilder();
             builder.DoCommand(cmd, param);
             System.Environment.Exit(0);
         }
@@ -108,16 +105,16 @@ namespace Stpettersens.nGaudi
             catch (IOException ioe)
             {
                 // Catch I/O exception
-                DisplayError(ioe);
+                b.DisplayUsageError(ioe);
             }
             catch (Exception ex)
             {
                 // Catch another exception
-                DisplayError(ex);
+                b.DisplayUsageError(ex);
             }
             // Delegate to the foreman and builder
             GaudiForeman foreman = new GaudiForeman(buildConf);
-            GaudiBuilder builder = new GaudiBuilder(null, sSwitch, beVerbose, logging);
+            GaudiBuilder builder = new GaudiBuilder(null);
         }
         // Generate a Gaudi build file (build.json)
         static void GenerateBuildFile()
@@ -126,7 +123,7 @@ namespace Stpettersens.nGaudi
         }
         static void DoPluginAction(string plugin)
         {
-
+            // TODO
         }
   
         // Display version information and exit
