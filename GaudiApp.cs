@@ -25,7 +25,6 @@ namespace Stpettersens.nGaudi
         // -----------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
         static GaudiBase b = new GaudiBase();
-        static GaudiLogger logger = new GaudiLogger();
         static GaudiMessenger messenger = new GaudiMessenger();
 
         static void Main(string[] args)
@@ -62,7 +61,7 @@ namespace Stpettersens.nGaudi
                             GenerateBuildFile();
                             break;
                         case "-p":
-                            DoPluginAction(args[i]);
+                            DoPluginAction("a"); //args[i]);
                             break;
                         case "-q":
                             b.enableVerbosity(false);
@@ -123,9 +122,9 @@ namespace Stpettersens.nGaudi
         }
         static void DoPluginAction(string plugin)
         {
-            // TODO
+            //new GaudiPythonPlugin("plugin"); // !
+            new GaudiBooPlugin("plugin"); // !
         }
-  
         // Display version information and exit
         static void DisplayVersion()
         {

@@ -22,43 +22,10 @@ namespace Stpettersens.nGaudi
     {
         protected enum DirActions { CREATE, ERASE };
         protected enum FileActions { CREATE, ERASE };
-        protected string logFile = "gaudi.log";
 
-        // Protected method to dump program feedback to the log file
-        protected void logDump(string message)
-        {
-            DateTime timestamp = DateTime.Now;
-            if (isLogging())
-            {
-                WriteToFile(
-                    logFile, String.Format("[{0}]\n{1}", timestamp, message), true
-                );
-            }
-        }
-
-        // File writing operations
-        protected void WriteToFile(string file, string message, bool append)
-        {
-            StreamWriter output;
-            if (append) output = File.AppendText(file);
-            else output = File.CreateText(file);
-            try
-            {
-                output.WriteLine(message);
-            }
-            catch (IOException ioe)
-            {
-                PrintError(ioe.Message);
-            }
-            finally
-            {
-                output.Close();
-            }
-        }
         // File manipulation operations
         protected void ManipulateFile(string file, FileActions action)
         {
-
             FileInfo aFile = new FileInfo(file);
             switch (action)
             {
@@ -82,7 +49,6 @@ namespace Stpettersens.nGaudi
         // Directory manipulation operations
         protected void ManipulateDir(string dir, DirActions action)
         {
-
             DirectoryInfo aDir = new DirectoryInfo(dir);
             switch (action)
             {
@@ -106,7 +72,7 @@ namespace Stpettersens.nGaudi
         // Execute an external process
         protected void ExecExtern(string param)
         {
-            logDump(String.Format("Executed -> {0}", param));
+            LogDump(String.Format("Executed -> {0}", param));
             Process p = new Process();
             p.StartInfo.FileName = param;
             p.Start();
