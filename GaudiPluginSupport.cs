@@ -13,9 +13,23 @@ using System.Text;
 
 namespace Stpettersens.nGaudi
 {
-    class GaudiPluginSupport
+    static class GaudiPluginSupport
     {
+        public enum PluginLang { IronPython, Boo };
+
         // Code to enable or disable plug-in support.
         public const bool Enabled = true;
+
+        // Plugin language
+        public static PluginLang GetPluginLang() 
+        {
+            // Use IronPython for .NET 4 Framework
+            if (Environment.Version.Major.ToString() == "4")
+            {
+               return PluginLang.IronPython;
+            }
+            // Use Boo for .NET 3.5 Framework or Mono
+            else return PluginLang.Boo; 
+        }
     }
 }

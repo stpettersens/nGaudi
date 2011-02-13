@@ -1,8 +1,8 @@
 bin
 obj
 *.exe
+*.dll
 *.log
 *.suo
 *.userprefs
 *.pidb
-

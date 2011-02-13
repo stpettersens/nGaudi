@@ -22,11 +22,18 @@ namespace Stpettersens.nGaudi
                 booc.Parameters.Input.Add(
                     new FileInput(String.Format("{0}.boo", plugin))
                 );
-                booc.Parameters.Pipeline = new CompileToBoo();
+                booc.Parameters.Pipeline = new CompileToFileAndVerify();
                 booc.Parameters.Ducky = true;
                 context = booc.Run();
 
-                // TODO
+                // Note that the following code might throw an error if the Boo script had bugs.
+                //if (context.GeneratedAssembly != null)
+                //{
+                //    Type scriptModule = context.GeneratedAssembly.GetType("ScriptModule");
+                //    MethodInfo stringManip = scriptModule.GetMethod("stringManip");
+                //    string output = (string)stringManip.Invoke(null, new object[] { "Tag" });
+                //    Console.WriteLine(output);
+                //}
             }
             catch (CompilerError bce)
             {

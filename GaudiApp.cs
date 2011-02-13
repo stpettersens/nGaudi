@@ -122,8 +122,7 @@ namespace Stpettersens.nGaudi
         }
         static void DoPluginAction(string plugin)
         {
-            //new GaudiPythonPlugin("plugin"); // !
-            new GaudiBooPlugin("plugin"); // !
+            new GaudiBooPlugin("plugin");
         }
         // Display version information and exit
         static void DisplayVersion()
@@ -144,7 +143,7 @@ namespace Stpettersens.nGaudi
             Console.WriteLine("-l: Enable logging of certain events.");
             Console.WriteLine("-i: Display usage information and quit.");
             Console.WriteLine("-v: Display version information and quit.");
-            Console.WriteLine("-n: Generate native Gaudi build file (build.json).");
+            Console.WriteLine("-n: Generate Gaudi build file (build.json).");
             Console.WriteLine("-p: Invoke <plug-in> action.");
             Console.WriteLine("-q: Mute console output, except for :echo and errors (Quiet mode).");
             Console.WriteLine("-f: Use <build file> instead of build.json.");
