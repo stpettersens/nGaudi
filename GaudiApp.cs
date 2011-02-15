@@ -122,7 +122,8 @@ namespace Stpettersens.nGaudi
         }
         static void DoPluginAction(string plugin)
         {
-            new GaudiBooPlugin("plugin");
+            new GaudiPythonPlugin("plugin");
+            //new GaudiBooPlugin("plugin");
         }
         // Display version information and exit
         static void DisplayVersion()
