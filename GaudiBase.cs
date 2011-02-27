@@ -20,8 +20,8 @@ namespace Stpettersens.nGaudi
     {
         static bool logging = false;
         static bool beVerbose = true;
-        const int errCode = -2;
-        protected string logFile = "gaudi.log";
+        const int ErrCode = -2;
+        const string LogFile = "gaudi.log";
 
         // Protected method to dump program feedback to the log file
         protected void LogDump(string message)
@@ -30,7 +30,7 @@ namespace Stpettersens.nGaudi
             if (isLogging())
             {
                 WriteToFile(
-                    logFile, String.Format("[{0}]\n{1}", timestamp, message), true
+                    LogFile, String.Format("[{0}]\r\n{1}\r\n", timestamp, message), true
                 );
             }
         }
@@ -43,7 +43,7 @@ namespace Stpettersens.nGaudi
             else output = File.CreateText(file);
             try
             {
-                output.WriteLine(message);
+                output.Write(message);
             }
             catch (IOException ioe)
             {
@@ -69,13 +69,13 @@ namespace Stpettersens.nGaudi
             else beVerbose = false;
         }
 
-        // Return vebosity
+        // Return vebosity status
         public bool isVerbose()
         {
             if (beVerbose) return true;
             else return false;
         }
-        // Return logging
+        // Return logging status
         public bool isLogging()
         {
             if (logging) return true;
@@ -87,7 +87,7 @@ namespace Stpettersens.nGaudi
         {
             Console.WriteLine("\tAborting: {0}.", error);
             LogDump(error); // Also log it
-            Environment.Exit(errCode); // Exit application with error code
+            Environment.Exit(ErrCode); // Exit application with error code
         }
 
         // Display an error which results in showing usage instructions
@@ -95,7 +95,7 @@ namespace Stpettersens.nGaudi
         {
             Console.WriteLine("\nError: {0}", ex.Message);
             LogDump(ex.Message);
-            GaudiApp.DisplayUsage(errCode);
+            GaudiApp.DisplayUsage(ErrCode);
         }
 
         // Overloaded for string parameter
@@ -103,7 +103,7 @@ namespace Stpettersens.nGaudi
         {
             Console.WriteLine("\nError: {0}", ex);
             LogDump(ex);
-            GaudiApp.DisplayUsage(errCode);
+            GaudiApp.DisplayUsage(ErrCode);
         }
     }
 }

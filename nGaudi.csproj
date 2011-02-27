@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>lib\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="IronPython">
       <HintPath>lib\IronPython.dll</HintPath>
     </Reference>
@@ -57,10 +60,15 @@
     <Compile Include="GaudiForeman.cs" />
     <Compile Include="GaudiIO.cs" />
     <Compile Include="GaudiMessenger.cs" />
+    <Compile Include="GaudiPacker.cs" />
+    <Compile Include="GaudiPluginLoader.cs" />
     <Compile Include="GaudiPluginSupport.cs" />
     <Compile Include="GaudiPythonPlugin.cs" />
     <Compile Include="JSON.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

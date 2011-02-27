@@ -55,16 +55,18 @@ namespace Stpettersens.nGaudi
                 case DirActions.CREATE: // Create a directory
                     if (aDir.Exists)
                     {
-                        PrintError(String.Format("Directory \'{0}\' already exists", dir));
+                        PrintError(String.Format("Directory '{0}' already exists", dir));
                     }
                     aDir.Create();
+                    LogDump(String.Format("Created directory -> '{0}'.", dir));
                     break;
                 case DirActions.ERASE: // Erase a directory
                     if (!aDir.Exists)
                     {
-                        PrintError(String.Format("Directory \'{0}\' does not exist", dir));
+                        PrintError(String.Format("Directory '{0}' does not exist", dir));
                     }
                     aDir.Delete();
+                    LogDump(String.Format("Erased directory -> '{0}'.", dir));
                     break;
             }
         }

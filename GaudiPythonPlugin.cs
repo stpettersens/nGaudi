@@ -36,10 +36,6 @@ namespace Stpettersens.nGaudi
                 PrintError("Script error - " + ex.Message);
                 LogDump(ex.Message);
             }
-            finally
-            {
-                Console.ReadLine();
-            }
         }
     }
 }

@@ -26,7 +26,6 @@ using System.Collections;
 using System.Globalization;
 using System.Text;
 
-
 namespace Procurios.Public
 {
 	/// <summary>
