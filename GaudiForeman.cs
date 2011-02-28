@@ -13,14 +13,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Procurios.Public;
+using System.IO;
+using Jayrock.Json;
 
 namespace Stpettersens.nGaudi
 {
     class GaudiForeman : GaudiBase
     {
-        string buildConf;
-        Hashtable buildJson;
+        string buildConf, buildJson;
         ArrayList[] actions;
 
         public GaudiForeman(string buildConf)
@@ -31,25 +31,10 @@ namespace Stpettersens.nGaudi
             buildJson = ParseBuildJson();
             //ParseEachAction();   
         }
-        Hashtable ParseBuildJson()
+        public string ParseBuildJson()
         {
-            try
-            {
-                return (Hashtable)JSON.JsonDecode(buildConf);
-            }
-            catch (Exception)
-            {
-                // Need to modify JSON.cs to throw exceptions
-                DisplayUsageError("Badly formatted JSON instructions");
-            }
-            return null;
-        }
-        void ParseEachAction()
-        {
-            foreach (DictionaryEntry x in buildJson)
-            {
-                Console.WriteLine(x.Key);
-            }
+            JsonTextReader reader = new JsonTextReader(new StreamReader(buildConf));
+            return "string";
         }
     }
 }

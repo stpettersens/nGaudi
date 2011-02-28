@@ -21,9 +21,9 @@ namespace Stpettersens.nGaudi
     {
         string archive;
 
-        public GaudiPacker(string arch)
+        public GaudiPacker(string archive)
         {
-            this.archive = arch;
+            this.archive = archive;
         }
         public string ExtractZipFile()
         {

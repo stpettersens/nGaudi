@@ -44,6 +44,9 @@
     <Reference Include="IronPython.Modules">
       <HintPath>lib\IronPython.Modules.dll</HintPath>
     </Reference>
+    <Reference Include="Jayrock.Json">
+      <HintPath>lib\Jayrock.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Scripting">
       <HintPath>lib\Microsoft.Scripting.dll</HintPath>
