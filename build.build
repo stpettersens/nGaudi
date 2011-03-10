@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NAnt buildfile to build nGaudi, modified version of Ant build file for original Gaudi -->
+<project name="nGaudi" default="build" basedir=".">
+	
+	<description>nGaudi buildfile for NAnt</description>
+	
+	<!-- Targets -->
+	<target name="init" decription="Initialization task">
+	
+		<!-- Change target framework to .NET 4.0 -->
+		<property name="nant.settings.currentframework" value="net-4.0" />
+		
+	</target>
+	
+	<target name="build" description="Compile source code to executable" depends="init">
+	
+		<echo message="Compiling nGaudi..."/>
+		<csc target="exe" output="nGaudi.exe" debug="true">
+			<sources>
+				<include name="GaudiApp.cs"/>
+				<include name="GaudiBase.cs"/>
+				<include name="GaudiBuilder.cs"/>
+				<include name="GaudiForeman.cs"/>
+				<include name="GaudiIO.cs"/>
+				<include name="GaudiMessenger.cs"/>
+				<include name="GaudiPacker.cs"/>
+				<include name="GaudiPluginLoader.cs"/>
+				<include name="GaudiPluginSupport.cs"/>
+				<include name="GaudiPythonPlugin.cs"/>
+				<include name="Properties/AssemblyInfo.cs"/>
+			</sources>
+			<references>
+				<include name="mscorelib.dll"/>
+				<include name="System.dll"/>
+				<include name="System.Core.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="Microsoft.Data.DataSetExtensions.dll"/>
+				<include name="Microsoft.CSharp.dll"/>
+				<include name="Jayrock.Json.dll"/>
+				<include name="IronPython.dll"/>
+				<include name="IronPython.Modules.dll"/>
+				<include name="Microsoft.Scripting.dll"/>
+				<include name="Microsoft.Dynamic.dll"/>
+				<include name="Ionic.Zip.dll"/>
+			</references>
+		</csc>
+		
+	</target>
+	
+	<target name="sapps" description="Compile supporting applications for NSIS installer"
+	 depends="build">
+	 	<echo message="Compiling supporting programs for NSIS installer..."/>
+	 	
+	</target>
+	 
+</project>

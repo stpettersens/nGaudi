@@ -19,10 +19,10 @@ namespace Stpettersens.nGaudi
 {
     class GaudiApp
     {
-        // -----------------------------------------------------------
+        // ------------------------------------------------------------
         const string CliName = "nGaudi";
         const string AppVersion = "0.1";
-        // -----------------------------------------------------------
+        // ------------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
         static GaudiBase b = new GaudiBase();
         static GaudiMessenger messenger;
@@ -141,10 +141,10 @@ namespace Stpettersens.nGaudi
             Console.WriteLine("\nnGaudi platform agnostic build tool");
             Console.WriteLine("Copyright (c) 2011 Sam Saint-Pettersen");
             Console.WriteLine("\nReleased under the MIT/X11 License.");
-            Console.WriteLine("\nUsage: {0} [-s <port>][-l][-i|-v|-n|-m][-q]", CliName);
+            Console.WriteLine("\nUsage: {0} [-l][-s <port>][-i|-v|-n|-m][-q]", CliName);
             Console.WriteLine("[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]");
-            Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
             Console.WriteLine("-l: Enable logging of certain events.");
+            Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
             Console.WriteLine("-i: Display usage information and quit.");
             Console.WriteLine("-v: Display version information and quit.");
             Console.WriteLine("-b: Generate Gaudi build file (build.json).");

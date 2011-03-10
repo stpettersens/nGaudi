@@ -20,15 +20,15 @@ namespace Stpettersens.nGaudi
 {
     class GaudiForeman : GaudiBase
     {
-        string buildConf, buildJson;
-        ArrayList[] actions;
+        string buildConf; //, buildJson;
+        //ArrayList[] actions;
 
         public GaudiForeman(string buildConf)
         {
             this.buildConf = buildConf;
 
             // Parse build config into JSON Hashtable on initialization
-            buildJson = ParseBuildJson();
+            //buildJson = ParseBuildJson();
             //ParseEachAction();   
         }
         public string ParseBuildJson()
