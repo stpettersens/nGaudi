@@ -25,7 +25,7 @@ namespace Stpettersens.nGaudi
         // -----------------------------------------------------------
         static string buildFile = "build.json"; // Default build file
         static GaudiBase b = new GaudiBase();
-        static GaudiMessenger messenger = new GaudiMessenger();
+        static GaudiMessenger messenger;
 
         static void Main(string[] args)
         { 
@@ -54,6 +54,7 @@ namespace Stpettersens.nGaudi
                             b.enableLogging(true);
                             break;
                         case "-s":
+                            messenger = new GaudiMessenger(3082);
                             messenger.Start();
                             break;
                         case "-b":

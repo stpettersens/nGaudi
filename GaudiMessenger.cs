@@ -12,19 +12,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO.Ports;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Stpettersens.nGaudi
 {
     class GaudiMessenger : GaudiBase
     {
-        public GaudiMessenger()
-        {
+        IPAddress ip;
+        TcpListener serverSocket;
+        TcpClient clientSocket;
+        byte[] localhost = { 127, 0, 0, 1 };
+        int port;
 
+        public GaudiMessenger(int port)
+        {
+            ip = new IPAddress(localhost);
+            this.port = port;
+            serverSocket = new TcpListener(ip, port);
         }
         public void Start()
         {
-            // TODO
+            LogDump(String.Format("Server started on port {0}.", port));
+            serverSocket.Start();
+            clientSocket = serverSocket.AcceptTcpClient();
         }
     }
 }
