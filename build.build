@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- NAnt buildfile to build nGaudi, modified version of Ant build file for original Gaudi -->
+<!-- NAnt buildfile to build nGaudi -->
 <project name="nGaudi" default="build" basedir=".">
 	
 	<description>nGaudi buildfile for NAnt</description>
