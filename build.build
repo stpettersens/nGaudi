@@ -8,49 +8,157 @@
 	<target name="init" decription="Initialization task">
 	
 		<!-- Change target framework to .NET 4.0 -->
-		<property name="nant.settings.currentframework" value="net-4.0" />
+		<property name="nant.settings.currentframework" value="net-4.0"/>
 		
+		<!-- Target executables -->
+		<property name="nGaudi" value="dist/nGaudi.exe"/>
+		<property name="CLRCheck" value="dist/CLRCheck.exe"/>
+		<property name="FindInVar" value="dist/FindInVar.exe"/>
+		
+		<!-- Source files  -->
+		<echo message="Defining source files..."/>
+		<property name="GaudiApp" value="GaudiApp.cs"/>
+		<property name="GaudiBase" value="GaudiBase.cs"/>
+		<property name="GaudiBuilder" value="GaudiBuilder.cs"/>
+		<property name="GaudiForeman" value="GaudiForeman.cs"/>
+		<property name="GaudiIO" value="GaudiIO.cs"/>
+		<property name="GaudiMessenger" value="GaudiMessenger.cs"/>
+		<property name="GaudiPacker" value="GaudiPacker.cs"/>
+		<property name="GaudiPluginLoader" value="GaudiPluginLoader.cs"/>
+		<property name="GaudiPluginSupport" value="GaudiPluginSupport.cs"/>
+		<property name="GaudiPythonPlugin" value="GaudiPythonPlugin.cs"/>
+		<property name="AsmInfo" value="Properties/AssemblyInfo.cs"/>
+		<property name="CLRCheck_s" value="dist/CLRCheck.cs"/>
+		<property name="FindInVar_s" value="dist/FindInVar.cs"/>
+		
+		<!-- Referenced assemblies -->
+		<echo message="Defining referenced assemblies..."/>
+		<property name="json.lib" value="Jayrock.Json.dll"/>
+		<property name="ipy.lib" value="IronPython.dll"/>
+		<property name="ipy.mods" value="IronPython.Modules.dll"/>
+		<property name="script.lib" value="Microsoft.Scripting.dll"/>
+		<property name="dynamic.lib" value="Microsoft.Dynamic.dll"/>
+		<property name="zip.lib" value="Ionic.Zip.dll"/>
+		
+	</target>
+	
+	<target name="asminfo" decription="Generate assembly information for supporting applications">
+	
+		<asminfo output="dist/CLRCheckAsmInfo.cs" language="CSharp">
+	    <imports>
+	        <import namespace="System" />
+	        <import namespace="System.Reflection" />
+	        <import namespace="System.EnterpriseServices" />
+	        <import namespace="System.Runtime.InteropServices" />
+	    </imports>
+	    <attributes>
+	        <attribute type="ComVisibleAttribute" value="false" />
+	        <attribute type="CLSCompliantAttribute" value="true" />
+	        <attribute type="AssemblyVersionAttribute" value="1.0.0.0" />
+	        <attribute type="AssemblyTitleAttribute" value="Common Language Runtime checker" />
+	        <attribute type="AssemblyDescriptionAttribute" value="Public domain" />
+	        <attribute type="AssemblyCopyrightAttribute" value="Sam Saint-Pettersen" />
+	        <attribute type="ApplicationNameAttribute" value="CLRCheck" />
+	    </attributes>
+	    <references>
+	        <include name="System.EnterpriseServices.dll" />
+	    </references>
+		</asminfo>
+		
+		<!--<asminfo output="dist/FindInVarAsmInfo.cs" language="CSharp">
+	    <imports>
+	        <import namespace="System" />
+	        <import namespace="System.Reflection" />
+	        <import namespace="System.EnterpriseServices" />
+	        <import namespace="System.Runtime.InteropServices" />
+	    </imports>
+	    <attributes>
+	        <attribute type="ComVisibleAttribute" value="false" />
+	        <attribute type="CLSCompliantAttribute" value="true" />
+	        <attribute type="AssemblyVersionAttribute" value="1.0.0.0" />
+	        <attribute type="AssemblyTitleAttribute" value="Find string in system variable" />
+	        <attribute type="AssemblyDescriptionAttribute" value="Public domain" />
+	        <attribute type="AssemblyCopyrightAttribute" value="Sam Saint-Pettersen" />
+	        <attribute type="ApplicationNameAttribute" value="FindInVar" />
+	    </attributes>
+	    <references>
+	        <include name="System.EnterpriseServices.dll" />
+	    </references>
+		</asminfo>-->
+	
+	</target>
+	
+	<target name="clean" decription="Clean up any built files" depends="build">
+	
+		<echo message="Removing any built files or dependencies..."/>
+		<delete>
+			<fileset basedir="dist">
+				<include name="*.exe"/>
+				<include name="*.dll"/>
+    		</fileset>
+    	</delete>
+    	
 	</target>
 	
 	<target name="build" description="Compile source code to executable" depends="init">
 	
 		<echo message="Compiling nGaudi..."/>
-		<csc target="exe" output="nGaudi.exe" debug="true">
+		<csc target="exe" output="${nGaudi}" debug="false">
 			<sources>
-				<include name="GaudiApp.cs"/>
-				<include name="GaudiBase.cs"/>
-				<include name="GaudiBuilder.cs"/>
-				<include name="GaudiForeman.cs"/>
-				<include name="GaudiIO.cs"/>
-				<include name="GaudiMessenger.cs"/>
-				<include name="GaudiPacker.cs"/>
-				<include name="GaudiPluginLoader.cs"/>
-				<include name="GaudiPluginSupport.cs"/>
-				<include name="GaudiPythonPlugin.cs"/>
-				<include name="Properties/AssemblyInfo.cs"/>
+				<include name="${GaudiApp}"/>
+				<include name="${GaudiBase}"/>
+				<include name="${GaudiBuilder}"/>
+				<include name="${GaudiForeman}"/>
+				<include name="${GaudiIO}"/>
+				<include name="${GaudiMessenger}"/>
+				<include name="${GaudiPacker}"/>
+				<include name="${GaudiPluginLoader}"/>
+				<include name="${GaudiPluginSupport}"/>
+				<include name="${GaudiPythonPlugin}"/>
+				<include name="${AsmInfo}"/>
 			</sources>
 			<references>
-				<include name="mscorelib.dll"/>
-				<include name="System.dll"/>
-				<include name="System.Core.dll"/>
-				<include name="System.Data.dll"/>
-				<include name="Microsoft.Data.DataSetExtensions.dll"/>
-				<include name="Microsoft.CSharp.dll"/>
-				<include name="Jayrock.Json.dll"/>
-				<include name="IronPython.dll"/>
-				<include name="IronPython.Modules.dll"/>
-				<include name="Microsoft.Scripting.dll"/>
-				<include name="Microsoft.Dynamic.dll"/>
-				<include name="Ionic.Zip.dll"/>
+				<include name="lib/${json.lib}"/>
+				<include name="lib/${ipy.lib}"/>
+				<include name="lib/${ipy.mods}"/>
+				<include name="lib/${script.lib}"/>
+				<include name="lib/${dynamic.lib}"/>
+				<include name="lib/${zip.lib}"/>
 			</references>
 		</csc>
+		<copy todir="dist">
+    		<fileset basedir="lib">
+        		<include name="*.dll"/>
+    		</fileset>
+		</copy>
 		
 	</target>
 	
-	<target name="sapps" description="Compile supporting applications for NSIS installer"
-	 depends="build">
+	<target name="sapps" description="Compile supporting applications for NSIS installer" depends="build, asminfo">
+	 
 	 	<echo message="Compiling supporting programs for NSIS installer..."/>
+	 	<csc target="exe" output="${CLRCheck}" debug="false">
+	 		<sources>
+	 			<include name="${CLRCheck_s}"/>
+	 			<include name="dist/CLRCheckAsmInfo.cs"/>
+	 		</sources>
+	 	</csc>
+	 	<!-- TODO
+	 	<csc target="exe" output="${FindInVar}" debug="false">
+	 		<sources>
+	 			<include name="${FindInVar_s}"/>
+	 			<include name="${FindInVar}AsmInfo.cs"/>
+	 		</sources>
+	 	</csc>-->
+	 	<delete file="dist/CLRCheckAsmInfo.cs"/>
 	 	
+	</target>
+	
+		<target name="nsis" description="Generate NSIS installer program"> <!--depends="sapps">-->
+		
+		<echo message="Generating NSIS installer program..."/>
+		<exec program="makensis.exe"><arg value="nGaudi_setup.nsi"/></exec>
+		
 	</target>
 	 
 </project>
