@@ -27,7 +27,7 @@ namespace Stpettersens.nGaudi
         // Print executed command
         void PrintCommand(string command, string param)
         {
-            if (isVerbose() && command != "echo")
+            if (IsVerbose() && command != "echo")
             {
                 Console.WriteLine("\t:{0} {1}", command, param);
             }

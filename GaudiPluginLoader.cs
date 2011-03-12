@@ -25,6 +25,9 @@ using System.Text;
 
 namespace Stpettersens.nGaudi
 {
+    /// <summary>
+    /// The GaudiPluginLoader class handles the loading of plug-ins for Gaudi.
+    /// </summary>
     class GaudiPluginLoader : GaudiBase
     {
         public GaudiPluginLoader(string plugin)

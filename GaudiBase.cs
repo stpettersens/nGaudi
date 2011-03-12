@@ -16,6 +16,9 @@ using System.IO;
 
 namespace Stpettersens.nGaudi
 {
+    /// <summary>
+    /// The GaudiBase class provides common methods to many classes.
+    /// </summary>
     class GaudiBase
     {
         static bool logging = false;
@@ -23,11 +26,14 @@ namespace Stpettersens.nGaudi
         const int ErrCode = -2;
         const string LogFile = "gaudi.log";
 
-        // Protected method to dump program feedback to the log file
+        /// <summary>
+        /// Dump program feedback to the log file.
+        /// </summary>
+        /// <param name="message">Message to write to the log file.</param>
         protected void LogDump(string message)
         {
             DateTime timestamp = DateTime.Now;
-            if (isLogging())
+            if (IsLogging())
             {
                 WriteToFile(
                     LogFile, String.Format("[{0}]\r\n{1}\r\n", timestamp, message), true
@@ -35,7 +41,12 @@ namespace Stpettersens.nGaudi
             }
         }
 
-        // File writing operations
+        /// <summary>
+        /// Write text to a file.
+        /// </summary>
+        /// <param name="file">File to write to.</param>
+        /// <param name="message">Message to write to file.</param>
+        /// <param name="append">Append to existing file.</param>
         protected void WriteToFile(string file, string message, bool append)
         {
             StreamWriter output;
@@ -55,34 +66,43 @@ namespace Stpettersens.nGaudi
             }
         }
 
-        // Enable/disable logging
-        public void enableLogging(bool enabled)
+        /// <summary>
+        /// Enable/disable logging.
+        /// </summary>
+        /// <param name="enabled">Enabled logging.</param>
+        public void EnableLogging(bool enabled)
         {
             if (enabled) logging = true;
             else logging = false;
         }
 
-        // Enable verbosity
-        public void enableVerbosity(bool enabled)
+        /// <summary>
+        /// Enable/disable verbosity.
+        /// </summary>
+        /// <param name="enabled">Enabled verbosity.</param>
+        public void EnableVerbosity(bool enabled)
         {
             if (enabled) beVerbose = true;
             else beVerbose = false;
         }
 
         // Return vebosity status
-        public bool isVerbose()
+        public bool IsVerbose()
         {
             if (beVerbose) return true;
             else return false;
         }
         // Return logging status
-        public bool isLogging()
+        public bool IsLogging()
         {
             if (logging) return true;
             else return false;
         }
 
-        // Print an error related to action or com,mand and exit
+        /// <summary>
+        /// Print an error related to action or command and exit.
+        /// </summary>
+        /// <param name="error">Error to print.</param>
         protected void PrintError(string error)
         {
             Console.WriteLine("\tAborting: {0}.", error);
@@ -90,7 +110,10 @@ namespace Stpettersens.nGaudi
             Environment.Exit(ErrCode); // Exit application with error code
         }
 
-        // Display an error which results in showing usage instructions
+        /// <summary>
+        /// Display an error which results in showing usage instructions.
+        /// </summary>
+        /// <param name="ex">Exception message to display.</param>
         public void DisplayUsageError(Exception ex)
         {
             Console.WriteLine("\nError: {0}", ex.Message);
@@ -98,7 +121,10 @@ namespace Stpettersens.nGaudi
             GaudiApp.DisplayUsage(ErrCode);
         }
 
-        // Overloaded for string parameter
+        /// <summary>
+        /// Display an error which results in showing usage instructions.
+        /// </summary>
+        /// <param name="ex">Exception message to display.</param>
         public void DisplayUsageError(string ex)
         {
             Console.WriteLine("\nError: {0}", ex);

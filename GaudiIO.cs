@@ -17,7 +17,9 @@ using System.IO;
 
 namespace Stpettersens.nGaudi
 {
-
+    /// <summary>
+    /// The GaudiIO class provides common I/O operations for GaudiBuilder class.
+    /// </summary>
     class GaudiIO : GaudiBase
     {
         protected enum DirActions { CREATE, ERASE };

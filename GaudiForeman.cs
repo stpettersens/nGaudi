@@ -31,7 +31,7 @@ namespace Stpettersens.nGaudi
             //buildJson = ParseBuildJson();
             //ParseEachAction();   
         }
-        public string ParseBuildJson()
+        private string ParseBuildJson()
         {
             JsonTextReader reader = new JsonTextReader(new StreamReader(buildConf));
             return "string";

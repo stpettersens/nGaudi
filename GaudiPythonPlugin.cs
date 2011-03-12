@@ -33,7 +33,7 @@ namespace Stpettersens.nGaudi
             }
             catch (Exception ex)
             {
-                PrintError("Script error - " + ex.Message);
+                PrintError(String.Format("Script error - {0}.", ex.Message));
                 LogDump(ex.Message);
             }
         }

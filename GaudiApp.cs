@@ -17,6 +17,9 @@ using System.IO;
 
 namespace Stpettersens.nGaudi
 {
+    /// <summary>
+    /// The GaudiApp class is the entry class for the application.
+    /// </summary>
     class GaudiApp
     {
         // ------------------------------------------------------------
@@ -27,6 +30,10 @@ namespace Stpettersens.nGaudi
         static GaudiBase b = new GaudiBase();
         static GaudiMessenger messenger;
 
+        /// <summary>
+        /// Main method, entry point of program.
+        /// </summary>
+        /// <param name="args">Command-line arguments to the program.</param>
         static void Main(string[] args)
         { 
             string action = "build";
@@ -51,7 +58,7 @@ namespace Stpettersens.nGaudi
                             DisplayVersion();
                             break;
                         case "-l":
-                            b.enableLogging(true);
+                            b.EnableLogging(true);
                             break;
                         case "-s":
                             messenger = new GaudiMessenger(3082);
@@ -64,7 +71,7 @@ namespace Stpettersens.nGaudi
                             DoPluginAction(args[i]);
                             break;
                         case "-q":
-                            b.enableVerbosity(false);
+                            b.EnableVerbosity(false);
                             break;
                         case "-f":
                             buildFile = args[i];
@@ -83,8 +90,13 @@ namespace Stpettersens.nGaudi
             }
             else b.DisplayUsageError("Requires  0-6 arguments");
         }
-        // Just perform a stdin command; really just for testing implemented commands.
-        // E.g. argument ":move a->b"
+
+        /// <summary>
+        /// Just perform a stdin command; really just for testing implemented commands.
+        /// E.g. argument ":move a->b".
+        /// </summary>
+        /// <param name="cmd">Command to execute.</param>
+        /// <param name="param">Parameter for command.</param>
         static void RunCommand(string cmd, string param) 
         {
             // Create a new builder to run a command
@@ -92,7 +104,11 @@ namespace Stpettersens.nGaudi
             builder.DoCommand(cmd, param);
             Environment.Exit(0);
         }
-        // Load and delegate parse and execution of build file
+
+        /// <summary>
+        /// Load and delegate parse and execution of build file.
+        /// </summary>
+        /// <param name="action">Action to peform in build file.</param>
         static void LoadBuild(string action)
         {
             string buildConf = null;
@@ -118,7 +134,10 @@ namespace Stpettersens.nGaudi
             GaudiForeman foreman = new GaudiForeman(buildConf);
             GaudiBuilder builder = new GaudiBuilder(null);
         }
-        // Generate a Gaudi build file (build.json)
+
+        /// <summary>
+        /// Generate a Gaudi build file.
+        /// </summary>
         static void GenerateBuildFile()
         {
             // TODO
@@ -128,14 +147,21 @@ namespace Stpettersens.nGaudi
             new GaudiPluginLoader(plugin);
             Environment.Exit(0);
         }
-        // Display version information and exit
+
+        /// <summary>
+        /// Display version information and exit.
+        /// </summary>
         static void DisplayVersion()
         {
             Console.WriteLine("nGaudi v.{0} [CLR {1} ({2})]", AppVersion, 
             Environment.Version, Environment.OSVersion);
             Environment.Exit(0);
         }
-        // Display usage information and exit
+
+        /// <summary>
+        /// Display usage information and exit.
+        /// </summary>
+        /// <param name="exitCode">Exit code to use when terminating.</param>
         public static void DisplayUsage(int exitCode) 
         {
             Console.WriteLine("\nnGaudi platform agnostic build tool");
@@ -143,8 +169,8 @@ namespace Stpettersens.nGaudi
             Console.WriteLine("\nReleased under the MIT/X11 License.");
             Console.WriteLine("\nUsage: {0} [-l][-s <port>][-i|-v|-n|-m][-q]", CliName);
             Console.WriteLine("[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]");
-            Console.WriteLine("-l: Enable logging of certain events.");
-            Console.WriteLine("\n-s: Enable listen on socket (Default: TCP/3082).");
+            Console.WriteLine("\n-l: Enable logging of certain events.");
+            Console.WriteLine("-s: Enable listen on socket (Default: TCP/3082).");
             Console.WriteLine("-i: Display usage information and quit.");
             Console.WriteLine("-v: Display version information and quit.");
             Console.WriteLine("-b: Generate Gaudi build file (build.json).");

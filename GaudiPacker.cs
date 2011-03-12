@@ -17,6 +17,9 @@ using Ionic.Zip;
 
 namespace Stpettersens.nGaudi
 {
+    /// <summary>
+    /// The GaudiPacker class handles the extracting and zipping of ZIP archives.
+    /// </summary>
     class GaudiPacker : GaudiBase
     {
         string archive;
