@@ -17,6 +17,10 @@ using System.Net.Sockets;
 
 namespace Stpettersens.nGaudi
 {
+    /// <summary>
+    /// The GaudiMessenger class adds a network
+    /// messaging service to Gaudi.
+    /// </summary>
     class GaudiMessenger : GaudiBase
     {
         IPAddress ip;
@@ -25,12 +29,20 @@ namespace Stpettersens.nGaudi
         byte[] localhost = { 127, 0, 0, 1 };
         int port;
 
+        /// <summary>
+        /// Constructor for GaudiMessenger class.
+        /// </summary>
+        /// <param name="port">Port to operate messenger service.</param>
         public GaudiMessenger(int port)
         {
             ip = new IPAddress(localhost);
             this.port = port;
             serverSocket = new TcpListener(ip, port);
         }
+
+        /// <summary>
+        /// Start listening for clients.
+        /// </summary>
         public void Start()
         {
             LogDump(String.Format("Server started on port {0}.", port));

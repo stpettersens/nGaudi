@@ -30,6 +30,10 @@ namespace Stpettersens.nGaudi
     /// </summary>
     class GaudiPluginLoader : GaudiBase
     {
+        /// <summary>
+        /// Constructor for the GaudiPluginLoader class.
+        /// </summary>
+        /// <param name="plugin">Plugin to load.</param>
         public GaudiPluginLoader(string plugin)
         {
             // First of all, extract plugin code from the plugin archive (Zip file).
