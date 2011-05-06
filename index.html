@@ -1,77 +1,132 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
-
-  <title>stpettersens/nGaudi @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #78e6a4;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #87195b; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #87195b; }
-    h3 { text-align: center; color: #87195b; }
-    a { color: #87195b; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
-<body>
-  <a href="http://github.com/stpettersens/nGaudi"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/stpettersens/nGaudi/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/stpettersens/nGaudi/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/stpettersens/nGaudi">nGaudi</a>
-      <span class="small">by <a href="http://github.com/stpettersens">stpettersens</a></span></h1>
-
-    <div class="description">
-      nGaudi is a re-implementation of Gaudi on the .NET platform.
-    </div>
-
-    <h2>Authors</h2>
-<p>Sam Saint-Pettersen (s.stpettersen@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Sam Saint-Pettersen (s.stpettersen@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/stpettersens/nGaudi/zipball/master">zip</a> or
-      <a href="http://github.com/stpettersens/nGaudi/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/stpettersens/nGaudi</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/stpettersens/nGaudi">stpettersens/nGaudi</a>
-    </div>
-
-  </div>
-
-  
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<!-- 
+	nGaudi project website X/HTML
+	Copyright (c) 2011 Sam Saint-Pettersen. -->
+  <head>
+  <title>Gaudi build tool for .NET</title>
+    <script type="text/javascript" src="jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="http://www.java.com/js/deployJava.js"></script>
+	<script type="text/javascript" src="ngaudi.js"></script>
+ 	<link type="text/css" rel="stylesheet" href="ngaudi.css"/>
+	<link type="application/atom+xml" rel="alternate" href="https://github.com/stpettersens/Gaudi/commits/master.atom"/>
+  	<meta http-equiv="content-type" content="application/xhtml+xml; charset=ISO-8859-1"/>
+  	</head>
+  	<body onload="onLoad();">
+  	<div>
+	<a href="http://github.com/stpettersens/Gaudi">
+	<img id="forkMe" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me 
+	on GitHub" /></a>
+	</div>
+       <div id="navigation">
+       <h2>nGaudi agnostic build tool for .NET</h2>
+       <br/>
+	   <a class="navi" href="index.html">Home</a>
+	   <a class="navi" href="#dl">Download</a>
+	   <a class="navi" href="#">Wiki</a>
+	   <a class="navi" href="https://github.com/stpettersens/nGaudi/commits/master.atom">Commits</a>
+	   <img id="commitFeed" title="Atom feed." alt="Atom feed." src="images/feed_28.png"/>
+       </div>  
+    <div id="description">
+ 	<img id="photo" alt="Photo &copy; 2006 Justin Baeder. CC." 
+       	src="images/photo_logo.jpg"/>
+    	<h3>What is nGaudi?</h3>
+      	<p>
+		<strong>nGaudi is a platform agnostic build tool written in
+		<a class="extern" href="http://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#</a> which runs on the
+    <a class="extern" href="http://www.microsoft.com/net">Microsoft .NET</a> or <a class="extern" href="http://www.mono-project.com">Mono</a> platforms.</strong>
+      	</p>
+      	<p>
+      nGaudi can be thought of as being similar to <a class="extern" href="http://ant.apache.org">Apache Ant</a> 
+      in that it too also abstracts commands related to
+     	building software away from the operating system; but differs in that its build files are based on a 
+      <acronym title="JavaScript Object Notation">JSON</acronym>
+		  format rather than an <acronym title="eXtensible Markup Language">XML</acronym> format.
+      	</p>
+        <p>
+          nGaudi is a port of the original <a href="http://stpettersens.github.com/Gaudi">Gaudi</a> tool which was written for the JVM.
+        </p>
+		You can clone Gaudi from its <a class="extern" href="http://git-scm.com">Git</a> repo, using:
+    <pre id="repo">git clone git://github.com/stpettersens/nGaudi</pre>
+    	<!-- ClipboardApplet is embedded here -->
+		<script type="text/javascript">
+		<!--
+			// Regular expression for unsupported user agents.
+      // As it stands, there are problems with the applet loading on Macs.
+			var unsupported = /Version\/\d.\d.\d\sSafari|PlayStation|iPhone|Mac/;
+			
+			// Run applet when Java is enabled and user agent is supported.
+  			if(navigator.javaEnabled() && navigator.userAgent.search(unsupported) == -1)
+            {
+				var attributes = { id: 'cbApplet', code: 'ClipboardApplet',
+					archive: 'ClipboardApplet.jar',
+    				width: 200, height: 20 }; 
+  				var parameters = { mayscript: 'true', tocopy: 'repo', 
+  					jnlp_href: 'ClipboardApplet.jnlp' } ; 
+  				deployJava.runApplet(attributes, parameters, '1.6'); 
+            }  	
+		-->
+		</script>
+	</div>
+	<div id="features">
+	 <a name="dl"></a>
+	 <!-- Thanks to Mihai Ungureanu for assistance in design of buttons below -->  
+	 <table id="dl_subsection">
+	 <tr><td><a href="#">
+	 	<img id="download_button" alt="Download Gaudi executable." src="images/download_button.png"/></a></td>
+	 <td><a href="#">
+		<img id="download_src_button" alt="Download Gaudi source code." src="images/download_src_button.png"/></a></td></tr>
+	<tr><td class="caption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Installation program (EXE, 18 MB)<br/></td>
+	<td class="caption">C# source code (ZIP, 65 KB)</td></tr>
+	<tr><td class="caption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="#">Other downloads</a></td><td class="caption"><a id="deps_link">Dependencies</a></td></tr>
+	<tr><td></td><td><div id="deps_box">
+    <!-- Dependencies for nGaudi application -->
+    <ul>
+      <li class="alt">
+        <a class="extern" href="http://jayrock.berlios.de">
+		Jayrock.JSON</a><br/><small>(Jayrock.Json.dll)</small>
+      </li>
+    </ul>
+	</div></td></tr></table><br/><br/>
+     	<h3>Features</h3>
+     	<strong>Gaudi offers...</strong>
+     	<ul>
+     		<li>A compact, concise JSON based build file format.</li>
+     		<li>Platform agnostic commands such as <strong>:erase</strong>.</li>
+     		<li>Extendable commands via JSON based exension format.</li>
+     		<li>A plug-in architecture to offer advanced functionality to the build system
+     		using the <a class="extern" href="http://www.ironpython.net">IronPython</a> programming language.</li>
+     	</ul>
+     </div>
+     <div id="compatibility">
+     	<h3>Compatibility</h3>
+     	<p>
+     	Gaudi overall should be compatible with both the <a class="extern" href="http://bit.ly/b1tGtR">Microsoft .NET Framework 4+</a> or
+      the latest release of <a class="extern" href="http://www.mono-project.com/Download">Mono</a>.
+     	</p>
+     	<ul>
+		</ul>
+     </div>
+     <div id="footer">
+     <noscript>
+     	<p><strong>JavaScript is either unsupported or has been disabled in the browser.<br/>
+     	 For the best user experience, please enable JavaScript if possible. [
+      <a href="http://help.yahoo.com/l/us/yahoo/help/faq/browsers/browsers-63474.html">How do I fix this?</a>]</strong></p>
+	   </noscript>
+      <p>Copyright &copy; 2010-2011 <a class="flink" href="http://github.com/stpettersens">Sam Saint-Pettersen</a>.
+      All rights reserved.<br/>Photograph of hammer, courtesy of 	
+      <a class="flink" href="http://www.flickr.com/photos/justinbaeder/183930977/">Justin Baeder</a>.</p>
+      <p>
+      The <a class="flink" href="http://github.com/stpettersens/nGaudi">nGaudi project</a> is hosted courtesy of 
+      <a class="flink" href="http://github.com">Github</a>.
+      </p>
+      <p>
+      	This website validates as compliant
+      	<a class="flink" href="http://validator.w3.org/check?uri=referer">XHTML</a> &amp;
+      	<a class="flink" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>.
+      </p>
+     </div>
+  </body>
 </html>
