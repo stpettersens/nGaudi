@@ -27,7 +27,7 @@
         static void Main(string[] args)
         {  
             int returned = 1; // Return exit code -1 for neither true or false; default assumption
-            string detectedVer = String.Format("{0}", Environment.Version);
+            string detectedVer = String.Format("{0}\n", Environment.Version);
               
             if(args.Length == 1)
             {
