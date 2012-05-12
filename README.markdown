@@ -3,5 +3,4 @@ nGaudi
 
 Overview
 -----------
-nGaudi is a re-implementation of Gaudi on the .NET platform.
-
+Gaudi ported to the .NET platform.
